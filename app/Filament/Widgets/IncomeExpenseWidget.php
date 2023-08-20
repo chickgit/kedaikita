@@ -15,15 +15,15 @@ class IncomeExpenseWidget extends BaseWidget
     {
         $todayExpenses = Expense::query()
             ->where('date_added', now()->format('Y-m-d'))
-            ->get('amount');
+            ->get('total_price');
 
         $weeklyExpenses = Expense::query()
             ->whereBetween('date_added', [now()->startOfWeek(), now()->endOfWeek()])
-            ->get('amount');
+            ->get('total_price');
 
         $monthlyExpenses = Expense::query()
             ->whereBetween('date_added', [now()->startOfMonth(), now()->endOfMonth()])
-            ->get('amount');
+            ->get('total_price');
 
         $todayOrders = Order::query()
             ->where('date_order', now()->format('Y-m-d'))
@@ -38,15 +38,15 @@ class IncomeExpenseWidget extends BaseWidget
             ->get('total_price');
 
         $overallIncome = Order::all('total_price')->sum('total_price');
-        $overallExpense = Expense::all('amount')->sum('amount');
+        $overallExpense = Expense::all('total_price')->sum('total_price');
 
         return [
             Stat::make('Today Income', $this->format_money($todayOrders->sum('total_price'))),
             Stat::make('This Week Income', $this->format_money($weeklyOrders->sum('total_price'))),
             Stat::make('This Month Income', $this->format_money($monthlyOrders->sum('total_price'))),
-            Stat::make('Today Expense', $this->format_money($todayExpenses->sum('amount'))),
-            Stat::make('This Week Expense', $this->format_money($weeklyExpenses->sum('amount'))),
-            Stat::make('This Month Expense', $this->format_money($monthlyExpenses->sum('amount'))),
+            Stat::make('Today Expense', $this->format_money($todayExpenses->sum('total_price'))),
+            Stat::make('This Week Expense', $this->format_money($weeklyExpenses->sum('total_price'))),
+            Stat::make('This Month Expense', $this->format_money($monthlyExpenses->sum('total_price'))),
             Stat::make('Overall Income', $this->format_money($overallIncome)),
             Stat::make('Overall Expense', $this->format_money($overallExpense)),
             Stat::make('Balance', $this->format_money($overallIncome - $overallExpense)),
