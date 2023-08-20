@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->unsignedBigInteger('amount');
             $table->date('date_added');
+            $table->unsignedInteger('amount');
+            $table->unsignedBigInteger('price');
+            $table->unsignedBigInteger('total_price');
         });
     }
 
