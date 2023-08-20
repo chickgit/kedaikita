@@ -55,7 +55,7 @@ class ExpenseResource extends Resource
                     ->money('IDR')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date_added')
-                    ->dateTime()
+                    ->date()
                     ->sortable(),
             ])
             ->filters([
