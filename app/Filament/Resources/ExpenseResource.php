@@ -21,17 +21,22 @@ class ExpenseResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $modelLabel = 'Pengeluaran';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label(trans('name'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('date_added')
+                    ->label(trans('date_added'))
                     ->default(now())
                     ->required(),
                 Forms\Components\TextInput::make('amount')
+                    ->label(trans('amount'))
                     ->required()
                     ->minValue(1)
                     ->default(1)
@@ -41,6 +46,7 @@ class ExpenseResource extends Resource
                     })
                     ->numeric(),
                 Forms\Components\TextInput::make('price')
+                    ->label(trans('price'))
                     ->required()
                     ->default(0)
                     ->minValue(0)
@@ -51,6 +57,7 @@ class ExpenseResource extends Resource
                     })
                     ->numeric(),
                 Forms\Components\TextInput::make('total_price')
+                    ->label(trans('total_price'))
                     ->default(0)
                     ->readOnly()
                     ->prefix('Rp.')
