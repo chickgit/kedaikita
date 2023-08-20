@@ -19,19 +19,32 @@ class CustomerResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $modelLabel = 'Pelanggan';
+    public static function getModelLabel(): string
+    {
+        return __('forms.customer.label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('forms.customer.plural_label');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('forms.customer.navigation_label');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label(__('fields.name'))
                     ->required()
-                    ->label(trans('name'))
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
+                    ->label(__('fields.email'))
                     ->email()
-                    ->label(trans('email'))
                     ->maxLength(255),
             ]);
     }
@@ -41,10 +54,10 @@ class CustomerResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label(trans('name'))
+                    ->label(__('fields.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
-                    ->label(trans('email'))
+                    ->label(__('fields.email'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

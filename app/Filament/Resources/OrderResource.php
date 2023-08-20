@@ -26,26 +26,47 @@ class OrderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('forms.order.label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('forms.order.plural_label');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('forms.order.navigation_label');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label(__('fields.name'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
+                    ->label(__('fields.email'))
                     ->email()
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('date_order')
+                    ->label(__('fields.date_order'))
                     ->required()
                     ->default(now()),
                 Forms\Components\TextInput::make('total_price')
+                    ->label(__('fields.total_price'))
                     ->required()
                     ->readOnly()
                     ->prefix('Rp.'),
                 Repeater::make('order_details')
+                    ->label(__('fields.order_details'))
                     ->schema([
                         Select::make('product_name')
+                            ->label(__('fields.product_name'))
                             ->options(fn () => Product::all()->pluck('name', 'id'))
                             ->live()
                             ->afterStateUpdated(function (?string $state, ?string $old, Set $set) {
@@ -53,10 +74,12 @@ class OrderResource extends Resource
                             })
                             ->required(),
                         TextInput::make('product_price')
+                            ->label(__('fields.product_price'))
                             ->prefix('Rp.')
                             ->numeric()
                             ->readOnly(),
                         TextInput::make('product_amount')
+                            ->label(__('fields.product_amount'))
                             ->disabled(fn (Get $get): bool => !$get('product_name'))
                             ->required(fn (Get $get): bool => !!$get('product_name'))
                             ->numeric()
@@ -75,6 +98,7 @@ class OrderResource extends Resource
                                 // $set('product_price', Product::find($state)->price);
                             }),
                         TextInput::make('sub_total')
+                            ->label(__('fields.sub_total'))
                             ->readOnly()
                             ->numeric()
                             ->prefix('Rp.')
@@ -89,20 +113,26 @@ class OrderResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('fields.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->label(__('fields.email'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('total_price')
+                    ->label(__('fields.total_price'))
                     ->money('IDR')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('date_order')
+                    ->label(__('fields.date_order'))
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('fields.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label(__('fields.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -19,14 +19,31 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getModelLabel(): string
+    {
+        return __('forms.product.label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('forms.product.plural_label');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('forms.product.navigation_label');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label(__('fields.name'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('price')
+                    ->label(__('fields.price'))
                     ->required()
                     ->numeric()
                     ->prefix('Rp.'),
@@ -38,15 +55,19 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('fields.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
+                    ->label(__('fields.price'))
                     ->money('IDR')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('fields.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label(__('fields.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
