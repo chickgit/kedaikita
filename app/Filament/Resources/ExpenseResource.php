@@ -105,10 +105,12 @@ class ExpenseResource extends Resource
                 Tables\Columns\TextColumn::make('price')
                     ->label(__('fields.price'))
                     ->numeric()
+                    ->money('IDR')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_price')
                     ->label(__('fields.total_price'))
                     ->numeric()
+                    ->money('IDR')
                     ->sortable(),
             ])
             ->filters([
