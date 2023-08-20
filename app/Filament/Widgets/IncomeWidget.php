@@ -12,7 +12,7 @@ class IncomeWidget extends BaseWidget
     protected function getStats(): array
     {
         $todayOrders = Order::query()
-            ->where('date_order', now())
+            ->where('date_order', now()->format('Y-m-d'))
             ->get('total_price');
 
         $weeklyOrders = Order::query()
