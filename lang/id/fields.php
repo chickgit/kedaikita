@@ -15,4 +15,5 @@ return [
     'product_price' => 'Harga Produk',
     'product_amount' => 'Jumlah Produk',
     'sub_total' => 'Sub Total',
+    'notes' => 'Catatan',
 ];

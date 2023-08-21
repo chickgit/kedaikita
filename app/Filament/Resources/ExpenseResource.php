@@ -52,7 +52,7 @@ class ExpenseResource extends Resource
                     ->required()
                     ->minValue(1)
                     ->default(1)
-                    ->reactive()
+                    ->live(debounce:500)
                     ->afterStateUpdated(function (?string $state, ?string $old, Set $set, Get $get) {
                         $set('total_price', $state * $get('price'));
                     })
@@ -63,7 +63,7 @@ class ExpenseResource extends Resource
                     ->default(0)
                     ->minValue(0)
                     ->prefix('Rp.')
-                    ->reactive()
+                    ->live(debounce:500)
                     ->afterStateUpdated(function (?string $state, ?string $old, Set $set, Get $get) {
                         $set('total_price', $state * $get('amount'));
                     })
@@ -113,6 +113,7 @@ class ExpenseResource extends Resource
                     ->money('IDR')
                     ->sortable(),
             ])
+            ->defaultSort('date_added', 'desc')
             ->filters([
                 //
             ])
