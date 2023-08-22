@@ -73,7 +73,7 @@ class OrderResource extends Resource
                             ->afterStateUpdated(function (?string $state, ?string $old, Set $set, Get $get) {
                                 $set('product_price', Product::find($state)->price);
                                 $set('product_amount', 1);
-                                self::calculateTotalPrice($state, $set, $get);
+                                self::calculateTotalPrice($set, $get);
                             })
                             ->required(),
                         TextInput::make('product_price')
@@ -89,7 +89,7 @@ class OrderResource extends Resource
                             ->numeric()
                             ->live(debounce:500)
                             ->afterStateUpdated(function (?int $state, ?int $old, Set $set, Get $get) {
-                                self::calculateTotalPrice($state, $set, $get);
+                                self::calculateTotalPrice($set, $get);
                             }),
                         TextInput::make('sub_total')
                             ->label(__('fields.sub_total'))
@@ -167,10 +167,11 @@ class OrderResource extends Resource
         ];
     }
 
-    private static function calculateTotalPrice($state, Set $set, Get $get): void
+    private static function calculateTotalPrice(Set $set, Get $get): void
     {
+        $productAmount = $get('product_amount');
         $productPrice = $get('product_price');
-        $set('sub_total', $productPrice * $state);
+        $set('sub_total', $productPrice * $productAmount);
 
         $orderDetails = $get('../../order_details');
         $arrSubTotalOrderDetails = Arr::pluck($orderDetails, 'sub_total');
