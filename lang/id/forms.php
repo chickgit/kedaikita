@@ -12,9 +12,9 @@ return [
         'navigation_label' => 'Produk'
     ],
     'order' => [
-        'label' => 'Pembelian',
-        'plural_label' => 'Pembelian',
-        'navigation_label' => 'Pembelian'
+        'label' => 'Pemesanan',
+        'plural_label' => 'Pemesanan',
+        'navigation_label' => 'Pemesanan'
     ],
     'expense' => [
         'label' => 'Pengeluaran',
