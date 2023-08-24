@@ -14,7 +14,7 @@ class IncomeExpenseWidget extends BaseWidget
     protected function getStats(): array
     {
         $todayExpenses = Expense::query()
-            ->where('date_added', now()->format('Y-m-d'))
+            ->whereBetween('date_added', [now()->startOfDay(), now()->endOfDay()])
             ->get('total_price');
 
         $weeklyExpenses = Expense::query()
@@ -26,7 +26,7 @@ class IncomeExpenseWidget extends BaseWidget
             ->get('total_price');
 
         $todayOrders = Order::query()
-            ->where('date_order', now()->format('Y-m-d'))
+            ->whereBetween('date_order', [now()->startOfDay(), now()->endOfDay()])
             ->get('total_price');
 
         $weeklyOrders = Order::query()
