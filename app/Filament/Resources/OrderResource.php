@@ -69,6 +69,7 @@ class OrderResource extends Resource
                         Select::make('product_name')
                             ->label(__('fields.product_name'))
                             ->options(fn () => Product::orderBy('name', 'asc')->get()->pluck('name', 'id'))
+                            ->searchable()
                             ->live()
                             ->afterStateUpdated(function (?string $state, ?string $old, Set $set, Get $get) {
                                 $set('product_price', Product::find($state)->price);
