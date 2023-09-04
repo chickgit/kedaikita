@@ -101,6 +101,7 @@ class OrderResource extends Resource
                         TextInput::make('notes')
                             ->label(__('fields.notes'))
                     ])
+                    ->reorderable(false)
                     ->columnSpanFull()
                     ->grid(4),
             ]);
